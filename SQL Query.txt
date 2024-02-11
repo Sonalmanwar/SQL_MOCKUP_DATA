@@ -1,0 +1,93 @@
+select * from users;
+select * from progress;
+ 
+Q1) What are the Top 25 schools (.edu domains)?
+
+   SELECT email_domain, COUNT(*) FROM users
+   GROUP BY 1
+   ORDER BY 2 DESC
+   LIMIT 25;
+
+Q2)How many .edu learners are located in New York? 
+
+  SELECT city, COUNT (*) FROM users
+  WHERE city = 'New York'
+  AND email_domain LIKE '%.edu';
+
+Q3)How many of these Codecademy learners are using the mobile app?
+
+   select mobile_app 
+   from users 
+   WHERE mobile_app is not null;
+
+Q4)query for the sign up counts for each hour.
+
+   SELECT strftime('%H', sign_up_at) AS hour,
+   COUNT(*) AS sign_up_count
+   FROM users
+   GROUP BY hour
+   ORDER BY hour;
+
+Q5)Join the two tables using JOIN 
+   SELECT * from users join progress
+   on users.user_id= progress.user_id;
+
+Q6 )Do different schools (.edu domains) prefer different courses?
+    FOR CPP:
+
+    SELECT u.email_domain, COUNT(*) AS 'cpp'
+    FROM users AS 'u'
+    JOIN progress AS 'p'
+    ON u.user_id = p.user_id
+    WHERE p.learn_cpp IS NOT NULL
+    GROUP BY 1;
+    
+    FOR SQL :
+
+    SELECT u.email_domain, COUNT(*) AS 'sql'
+    FROM users AS 'u'
+    JOIN progress AS 'p'
+    ON u.user_id = p.user_id
+    WHERE p.learn_sql IS NOT NULL
+    GROUP BY 1;
+
+    FOR  HTML:
+
+    SELECT u.email_domain, COUNT(*) AS 'html'
+    FROM users AS 'u'
+    JOIN progress AS 'p'
+    ON u.user_id = p.user_id
+    WHERE p.learn_html IS NOT NULL
+    GROUP BY 1;
+    
+    FOR JAVASCRIPT:
+
+    ELECT u.email_domain, COUNT(*) AS 'javascript'
+    FROM users AS 'u'
+    JOIN progress AS 'p'
+    ON u.user_id = p.user_id
+    WHERE p.learn_javascript IS NOT NULL
+    GROUP BY 1;
+
+    FOR JAVA :
+
+    SELECT u.email_domain, COUNT(*) AS 'java'
+    FROM users AS 'u'
+    JOIN progress AS 'p'
+    ON u.user_id = p.user_id
+    WHERE p.learn_java IS NOT NULL
+    GROUP BY 1;
+
+Q7)What courses are the New Yorkers students taking?
+  
+   select * from users left JOIN progress 
+   on users.user_id= progress.user_id
+   WHERE city = "New York";
+
+
+Q8)What courses are the Chicago students taking?
+  
+   SELECT * FROM users LEFT JOIN progress 
+   ON users.user_id = progress.user_id
+   WHERE city = "Chicago";
+
